@@ -22,12 +22,16 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 	JLabel ObjectiveLabel = new JLabel();
 	
 	JTextArea HowToPlay = new JTextArea();
+	JScrollPane thescroll = new JScrollPane(HowToPlay);	
 	
 	SuperSocketMaster ssm;
 	
 	// Variables
-	String strObjective = "The OBJECTIVE of the game is to eliminate or capture the Flag of your opponent. You may also win by successfully maneuvering your own Flag to the opposite end of the board.";
+	String strObjectiveTitle = "*** THE OBJECTIVE OF THE GAME ***";
+	String strObjective = "The OBJECTIVE of the game is to ELIMINATE or CAPTURE the FLAG of your opponent. You may also win by successfully maneuvering your own FLAG to the opposite end of the board.";
 	String strObjective2 = "The player's set of pieces or soldiers with the corresponding ranks and functions consists of the following 21 pieces:";
+	String strPieces = "5-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"4-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"3-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"2-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"1-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"COLONEL: Eliminates any lower ranking officer, private, and flag"+"\n"+"LT. COLONEL: Eliminates any lower ranking officer, private, and flag"+"\n"+"MAJOR: Eliminates any lower ranking officer, private, and flag"+"\n"+"CAPTAIN: Eliminates any lower ranking officer, private, and flag"+"\n"+"1st LIEUTENANT: Eliminates any lower ranking officer, private, and flag"+"\n"+"2nd LIEUTENANT: Eliminates any lower ranking officer, private, and flag"+"\n"+"SERGEANT: private and flag"+"\n"+"SPY: Eliminates all officers (from the rank of Sergeant up to the five (5) Star General & the flag.";
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -		
 	
@@ -45,6 +49,7 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 			HelpButton.setVisible(false);
 			ObjectiveLabel.setVisible(true);
 			HowToPlay.setVisible(true);
+			thescroll.setVisible(true);
 			
 		}
 	}
@@ -125,16 +130,21 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 		ObjectiveLabel = new JLabel("HOW TO PLAY 'GAME OF THE GENERALS'");
 		ObjectiveLabel.setBounds(520,150,300,50);
 		ObjectiveLabel.setVisible(false);
-		HowToPlay = new JTextArea(strObjective + "\n" + "\n" + strObjective2);
+		HowToPlay = new JTextArea(strObjectiveTitle+"\n"+"\n"+strObjective+"\n"+"\n"+strObjective2+"\n"+"\n"+strPieces);
 		HowToPlay.setLineWrap(true);
 		HowToPlay.setWrapStyleWord(true);
 		HowToPlay.setBounds(390,200,500,300);
 		HowToPlay.setVisible(false);
+		HowToPlay.setEditable(false);
+		thescroll = new JScrollPane(HowToPlay);
+		thescroll.setBounds(390,200,500,300);
+		thescroll.setVisible(false);
 		
 		thepanel.add(StartGameButton);
 		thepanel.add(HelpButton);
 		thepanel.add(ObjectiveLabel);
 		thepanel.add(HowToPlay);
+		thepanel.add(thescroll);
 		
 		theframe.setContentPane(thepanel);
 		theframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
