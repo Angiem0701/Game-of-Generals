@@ -1,7 +1,7 @@
 // Game of Generals [Demo]
 // Created by: Angelica C. F. Manansala
 // Created on: December 21, 2018
-// Last Updated: December 23, 2018
+// Last Updated: December 24, 2018
 
 import java.awt.*;
 import java.awt.event.*;
@@ -32,18 +32,34 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 	
 	
 	// Variables
+	int intPageCount = 0;
+	
 	String strObjectiveTitle = "*** THE OBJECTIVE OF THE GAME ***";
 	String strObjective = "The OBJECTIVE of the game is to ELIMINATE or CAPTURE the FLAG of your opponent. You may also win by successfully maneuvering your own FLAG to the opposite end of the board.";
 	String strObjective2 = "The player's set of pieces or soldiers with the corresponding ranks and functions consists of the following 21 pieces:";
 	String strPieces = "5-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"4-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"3-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"2-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"1-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"COLONEL: Eliminates any lower ranking officer, private, and flag"+"\n"+"LT. COLONEL: Eliminates any lower ranking officer, private, and flag"+"\n"+"MAJOR: Eliminates any lower ranking officer, private, and flag"+"\n"+"CAPTAIN: Eliminates any lower ranking officer, private, and flag"+"\n"+"1st LIEUTENANT: Eliminates any lower ranking officer, private, and flag"+"\n"+"2nd LIEUTENANT: Eliminates any lower ranking officer, private, and flag"+"\n"+"SERGEANT: private and flag"+"\n"+"SPY: Eliminates all officers (from the rank of Sergeant up to the five (5) Star General & the flag."+"\n"+"PRIVATE: Eliminates the spy and the flag"+"\n"+"FLAG: can be eliminated by any piece including the opposing flag; a flag eliminates the opposing flag when it takes aggressive action by moving into the same square occupied by the other flag";
 	String strPiecesNote = "NOTE: If both soldiers are of equal ranks, BOTH are eliminated";
 
+	String strPreparingBattleTitle = "*** PREPARING FOR BATTLE: ***";
+	String strPreparingBattle = "Arrange your pieces on the first 3 rows on your end of the board. There is no predetermined place like chess does. Instead, you're free to arrange the pieces to your liking in accordance to your strategy and style.";
+	String strPreparingBattleNote = "NOTE: As you arrange your pieces on the first 3 rows, you will find 6 vacant squares. This is to allow for maneuvering and freedom of movement when play begins.";
+	String strMovement = "*** MOVEMENT: ***"+"\n"+"\n"+"1. Any player makes the first move - server client goes first here (lol sorry, not sorry)"+"\n"+"2. A player is allowed to move only one piece at a time."+"\n"+"3. A move consists of placing a piece to an adjacent square, either forward, backward or sideward.";
+	String strChallenging = "*** CHALLENGING: ***"+"\n"+"\n"+"As the game progresses, challenges are made resulting in the elimination of soldiers. A 'challenge' is made when the soldier moves into the same square occupied by an opposing soldier. When a challenge is made, the following rules of elimination apply:";
+	String strChallengingConditions = "- A higher ranked soldier eliminates a lower ranked soldier"+"\n"+"- If both soldiers are of equal ranks, they are both eliminated"+"\n"+"- A spy eliminates any officer starting from the Sergeant and above"+"\n"+"- The Flag can be eliminated or captured by any piece including the opponent's Flag"+"\n"+"- Only a Private can eliminate the Spy"+"\n"+"- The Flag that moves into the same square occupied by the other Flag wins the game";
+	String strChallenging2 = "For maximum suspsense, this program includes its own arbiter (or third party) to check the challenge between the two players. However, neither ranks of any piece will be revealed during these challenges. The player will receive the outranked piece and gives it back to the player who has lost it.";
+	
+	String strGameEndTitle = "*** HOW THE GAME ENDS: ***";
+	String strGameEnd = "1. The game ends when:"+"\n"+"- the Flag is eliminated or captured"+"\n"+"- a Flag reaches the opposite end of the board"+"\n"+"- a player resigns"+"\n"+"- both players agree on a drawn position";
+	String strGameEnd2 = "2. A Flag reaching the opposite end of the board may still be eliminated by any opposing piece occupying a square adjacent to the one reached by the Flag. In order to win, the Flag should at least be two squares or two ahead of any opposing piece.";
+	
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -		
 	
 	// METHODS - ACTIONLISTENER (Action Performed)
 	public void actionPerformed(ActionEvent evt){		
 		if(evt.getSource() == thetimer){
 			thepanel.repaint();
+			
+			System.out.println("Page Count: "+intPageCount);
 				
 		}else if(evt.getSource() == StartGameButton){
 			StartGameButton.setVisible(false);
@@ -52,6 +68,8 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 			JoinServerButton.setVisible(true);
 			
 		}else if(evt.getSource() == HelpButton){
+			intPageCount = intPageCount + 1;
+			
 			StartGameButton.setVisible(false);
 			HelpButton.setVisible(false);
 			ObjectiveLabel.setVisible(true);
@@ -60,6 +78,8 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 			MainMenuButton.setVisible(true);
 			
 		}else if(evt.getSource() == MainMenuButton){
+			intPageCount = 0;
+			
 			StartGameButton.setVisible(true);
 			HelpButton.setVisible(true);
 			ObjectiveLabel.setVisible(false);
@@ -69,9 +89,20 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 			PreviousButton.setVisible(false);
 						
 		}else if(evt.getSource() == Next1Button){
+			intPageCount = intPageCount + 1;
 			HowToPlay.setText(null);
-			PreviousButton.setVisible(true);	
+			
+			if(intPageCount == 2){
+				PreviousButton.setVisible(true);
+				HowToPlay.setText(strPreparingBattleTitle+"\n"+"\n"+strPreparingBattle+"\n"+"\n"+strPreparingBattleNote+"\n"+"\n"+strMovement+"\n"+"\n"+strChallenging+"\n"+"\n"+strChallengingConditions+"\n"+"\n"+strChallenging2);
+			
+			}else if(intPageCount == 3){
+				HowToPlay.setText(strGameEndTitle+"\n"+"\n"+strGameEnd+"\n"+"\n"+strGameEnd2);
+			}
+			
+		}else if(evt.getSource() == PreviousButton){
 		}
+
 	}
 	
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -	
@@ -148,12 +179,12 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 		HelpButton.setBounds(540,360,200,50);
 		
 		ObjectiveLabel = new JLabel("HOW TO PLAY 'GAME OF THE GENERALS'");
-		ObjectiveLabel.setBounds(510,50,300,50);
+		ObjectiveLabel.setBounds(510,10,300,50);
 		ObjectiveLabel.setVisible(false);
 		HowToPlay = new JTextArea(strObjectiveTitle+"\n"+"\n"+strObjective+"\n"+"\n"+strObjective2+"\n"+"\n"+strPieces+"\n"+"\n"+strPiecesNote);
 		HowToPlay.setLineWrap(true);
 		HowToPlay.setWrapStyleWord(true);
-		HowToPlay.setBounds(390,100,500,500);
+		HowToPlay.setBounds(390,50,500,550);
 		HowToPlay.setVisible(false);
 		HowToPlay.setEditable(false);
 		MainMenuButton = new JButton("Main Menu");
