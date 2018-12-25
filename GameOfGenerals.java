@@ -18,20 +18,25 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 	
 	JButton StartGameButton = new JButton();
 	JButton HelpButton = new JButton();
-	
+	JButton CreateServerButton = new JButton();
+	JButton JoinServerButton = new JButton();
+	JButton Next1Button = new JButton();
+	JButton PreviousButton = new JButton();
+	JButton MainMenuButton = new JButton();
+		
 	JLabel ObjectiveLabel = new JLabel();
 	
 	JTextArea HowToPlay = new JTextArea();
-	JScrollPane thescroll = new JScrollPane(HowToPlay);	
 	
 	SuperSocketMaster ssm;
+	
 	
 	// Variables
 	String strObjectiveTitle = "*** THE OBJECTIVE OF THE GAME ***";
 	String strObjective = "The OBJECTIVE of the game is to ELIMINATE or CAPTURE the FLAG of your opponent. You may also win by successfully maneuvering your own FLAG to the opposite end of the board.";
 	String strObjective2 = "The player's set of pieces or soldiers with the corresponding ranks and functions consists of the following 21 pieces:";
-	String strPieces = "5-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"4-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"3-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"2-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"1-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"COLONEL: Eliminates any lower ranking officer, private, and flag"+"\n"+"LT. COLONEL: Eliminates any lower ranking officer, private, and flag"+"\n"+"MAJOR: Eliminates any lower ranking officer, private, and flag"+"\n"+"CAPTAIN: Eliminates any lower ranking officer, private, and flag"+"\n"+"1st LIEUTENANT: Eliminates any lower ranking officer, private, and flag"+"\n"+"2nd LIEUTENANT: Eliminates any lower ranking officer, private, and flag"+"\n"+"SERGEANT: private and flag"+"\n"+"SPY: Eliminates all officers (from the rank of Sergeant up to the five (5) Star General & the flag.";
-
+	String strPieces = "5-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"4-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"3-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"2-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"1-STAR GENERAL: Eliminates any lower ranking officer, private, and flag"+"\n"+"COLONEL: Eliminates any lower ranking officer, private, and flag"+"\n"+"LT. COLONEL: Eliminates any lower ranking officer, private, and flag"+"\n"+"MAJOR: Eliminates any lower ranking officer, private, and flag"+"\n"+"CAPTAIN: Eliminates any lower ranking officer, private, and flag"+"\n"+"1st LIEUTENANT: Eliminates any lower ranking officer, private, and flag"+"\n"+"2nd LIEUTENANT: Eliminates any lower ranking officer, private, and flag"+"\n"+"SERGEANT: private and flag"+"\n"+"SPY: Eliminates all officers (from the rank of Sergeant up to the five (5) Star General & the flag."+"\n"+"PRIVATE: Eliminates the spy and the flag"+"\n"+"FLAG: can be eliminated by any piece including the opposing flag; a flag eliminates the opposing flag when it takes aggressive action by moving into the same square occupied by the other flag";
+	String strPiecesNote = "NOTE: If both soldiers are of equal ranks, BOTH are eliminated";
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -		
 	
@@ -39,18 +44,33 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 	public void actionPerformed(ActionEvent evt){		
 		if(evt.getSource() == thetimer){
 			thepanel.repaint();
-			
+				
 		}else if(evt.getSource() == StartGameButton){
 			StartGameButton.setVisible(false);
 			HelpButton.setVisible(false);
+			CreateServerButton.setVisible(true);
+			JoinServerButton.setVisible(true);
 			
 		}else if(evt.getSource() == HelpButton){
 			StartGameButton.setVisible(false);
 			HelpButton.setVisible(false);
 			ObjectiveLabel.setVisible(true);
 			HowToPlay.setVisible(true);
-			thescroll.setVisible(true);
+			Next1Button.setVisible(true);
+			MainMenuButton.setVisible(true);
 			
+		}else if(evt.getSource() == MainMenuButton){
+			StartGameButton.setVisible(true);
+			HelpButton.setVisible(true);
+			ObjectiveLabel.setVisible(false);
+			HowToPlay.setVisible(false);
+			Next1Button.setVisible(false);
+			MainMenuButton.setVisible(false);
+			PreviousButton.setVisible(false);
+						
+		}else if(evt.getSource() == Next1Button){
+			HowToPlay.setText(null);
+			PreviousButton.setVisible(true);	
 		}
 	}
 	
@@ -128,23 +148,45 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 		HelpButton.setBounds(540,360,200,50);
 		
 		ObjectiveLabel = new JLabel("HOW TO PLAY 'GAME OF THE GENERALS'");
-		ObjectiveLabel.setBounds(520,150,300,50);
+		ObjectiveLabel.setBounds(510,50,300,50);
 		ObjectiveLabel.setVisible(false);
-		HowToPlay = new JTextArea(strObjectiveTitle+"\n"+"\n"+strObjective+"\n"+"\n"+strObjective2+"\n"+"\n"+strPieces);
+		HowToPlay = new JTextArea(strObjectiveTitle+"\n"+"\n"+strObjective+"\n"+"\n"+strObjective2+"\n"+"\n"+strPieces+"\n"+"\n"+strPiecesNote);
 		HowToPlay.setLineWrap(true);
 		HowToPlay.setWrapStyleWord(true);
-		HowToPlay.setBounds(390,200,500,300);
+		HowToPlay.setBounds(390,100,500,500);
 		HowToPlay.setVisible(false);
 		HowToPlay.setEditable(false);
-		thescroll = new JScrollPane(HowToPlay);
-		thescroll.setBounds(390,200,500,300);
-		thescroll.setVisible(false);
+		MainMenuButton = new JButton("Main Menu");
+		MainMenuButton.addActionListener(this);
+		MainMenuButton.setBounds(390,610,160,50);
+		MainMenuButton.setVisible(false);
+		Next1Button = new JButton("Next ->");
+		Next1Button.addActionListener(this);
+		Next1Button.setBounds(730,610,160,50);
+		Next1Button.setVisible(false);
+		PreviousButton = new JButton("<- Previous");
+		PreviousButton.addActionListener(this);
+		PreviousButton.setBounds(560,610,160,50);
+		PreviousButton.setVisible(false);
+		
+		CreateServerButton = new JButton("Create a New Server");
+		CreateServerButton.addActionListener(this);
+		CreateServerButton.setBounds(540,310,200,50);
+		CreateServerButton.setVisible(false);
+		JoinServerButton = new JButton("Join an Existing Server");
+		JoinServerButton.addActionListener(this);
+		JoinServerButton.setBounds(540,360,200,50);
+		JoinServerButton.setVisible(false);
 		
 		thepanel.add(StartGameButton);
 		thepanel.add(HelpButton);
+		thepanel.add(CreateServerButton);
+		thepanel.add(JoinServerButton);
 		thepanel.add(ObjectiveLabel);
 		thepanel.add(HowToPlay);
-		thepanel.add(thescroll);
+		thepanel.add(Next1Button);
+		thepanel.add(MainMenuButton);
+		thepanel.add(PreviousButton);
 		
 		theframe.setContentPane(thepanel);
 		theframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
