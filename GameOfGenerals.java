@@ -1,7 +1,7 @@
 // Game of Generals [Demo]
 // Created by: Angelica C. F. Manansala
 // Created on: December 21, 2018
-// Last Updated: December 24, 2018
+// Last Updated: December 25, 2018
 
 import java.awt.*;
 import java.awt.event.*;
@@ -59,17 +59,29 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 		if(evt.getSource() == thetimer){
 			thepanel.repaint();
 			
-			System.out.println("Page Count: "+intPageCount);
-				
 		}else if(evt.getSource() == StartGameButton){
 			StartGameButton.setVisible(false);
 			HelpButton.setVisible(false);
 			CreateServerButton.setVisible(true);
 			JoinServerButton.setVisible(true);
 			
+		}else if(evt.getSource() == CreateServerButton){
+			ssm = new SuperSocketMaster(2468, this);
+			System.out.println("My server IP is: "+ssm.getMyAddress());
+			System.out.println("Server created");
+			ssm.connect();	
+			CreateServerButton.setVisible(false);
+			JoinServerButton.setVisible(false);
+			
+		}else if(evt.getSource() == JoinServerButton){
+			ssm = new SuperSocketMaster("192.168.0.20", 2468, this);
+			System.out.println("Server joined");
+			ssm.connect();
+			CreateServerButton.setVisible(false);
+			JoinServerButton.setVisible(false);
+			
 		}else if(evt.getSource() == HelpButton){
 			intPageCount = intPageCount + 1;
-			
 			StartGameButton.setVisible(false);
 			HelpButton.setVisible(false);
 			ObjectiveLabel.setVisible(true);
@@ -79,7 +91,6 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 			
 		}else if(evt.getSource() == MainMenuButton){
 			intPageCount = 0;
-			
 			StartGameButton.setVisible(true);
 			HelpButton.setVisible(true);
 			ObjectiveLabel.setVisible(false);
@@ -91,16 +102,39 @@ public class GameOfGenerals implements ActionListener, KeyListener, MouseListene
 		}else if(evt.getSource() == Next1Button){
 			intPageCount = intPageCount + 1;
 			HowToPlay.setText(null);
-			
-			if(intPageCount == 2){
+			if(intPageCount == 1){
+				PreviousButton.setVisible(false);
+				HowToPlay.setText(strObjectiveTitle+"\n"+"\n"+strObjective+"\n"+"\n"+strObjective2+"\n"+"\n"+strPieces+"\n"+"\n"+strPiecesNote);
+			}else if(intPageCount == 2){
 				PreviousButton.setVisible(true);
+				Next1Button.setVisible(true);
 				HowToPlay.setText(strPreparingBattleTitle+"\n"+"\n"+strPreparingBattle+"\n"+"\n"+strPreparingBattleNote+"\n"+"\n"+strMovement+"\n"+"\n"+strChallenging+"\n"+"\n"+strChallengingConditions+"\n"+"\n"+strChallenging2);
-			
 			}else if(intPageCount == 3){
 				HowToPlay.setText(strGameEndTitle+"\n"+"\n"+strGameEnd+"\n"+"\n"+strGameEnd2);
-			}
+				Next1Button.setVisible(false);
+			}else{
+				intPageCount = 3;
+				HowToPlay.setText(strGameEndTitle+"\n"+"\n"+strGameEnd+"\n"+"\n"+strGameEnd2);
+				Next1Button.setVisible(false);
+			}			
 			
 		}else if(evt.getSource() == PreviousButton){
+			intPageCount = intPageCount - 1;				
+				if(intPageCount == 1){
+					PreviousButton.setVisible(false);
+					HowToPlay.setText(strObjectiveTitle+"\n"+"\n"+strObjective+"\n"+"\n"+strObjective2+"\n"+"\n"+strPieces+"\n"+"\n"+strPiecesNote);					
+				}else if(intPageCount == 2){
+					PreviousButton.setVisible(true);
+					Next1Button.setVisible(true);
+					HowToPlay.setText(strPreparingBattleTitle+"\n"+"\n"+strPreparingBattle+"\n"+"\n"+strPreparingBattleNote+"\n"+"\n"+strMovement+"\n"+"\n"+strChallenging+"\n"+"\n"+strChallengingConditions+"\n"+"\n"+strChallenging2);
+				}else if(intPageCount == 3){
+					HowToPlay.setText(strGameEndTitle+"\n"+"\n"+strGameEnd+"\n"+"\n"+strGameEnd2);	
+					Next1Button.setVisible(false);			
+				}else{
+					intPageCount = 3;
+					HowToPlay.setText(strGameEndTitle+"\n"+"\n"+strGameEnd+"\n"+"\n"+strGameEnd2);
+					Next1Button.setVisible(false);
+			}
 		}
 
 	}
